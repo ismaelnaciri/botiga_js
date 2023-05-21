@@ -21,11 +21,11 @@ const sequelize = new Sequelize(
   }
 );
 
-sequelize.authenticate().then(() => {
-  console.log('Conexió establerta');
-}).catch((error) => {
-  console.error("No s'ha pogut connectar", error);
-});
+// sequelize.authenticate().then(() => {
+//   console.log('Conexió establerta');
+// }).catch((error) => {
+//   console.error("No s'ha pogut connectar", error);
+// });
 
 const Product = sequelize.define("productes", {
   idproducte:{
@@ -71,11 +71,11 @@ const Compras = sequelize.define("compres",{
   }
 });
 
-sequelize.sync().then(()=>{
-  console.log('Base de dades sincroniotzada');
-}).catch((error) => {
-  console.error("No s'ha pogut sincronitzar", error);
-});
+// sequelize.sync().then(()=>{
+//   console.log('Base de dades sincroniotzada');
+// }).catch((error) => {
+//   console.error("No s'ha pogut sincronitzar", error);
+// });
 
 
 app.use(cors());
@@ -160,6 +160,11 @@ app.post('/api/login',async (req,res)=> {
       })
     })
 })
+
+
+// app.get("/api/getCoinPrice", async (req, res) => {
+//
+// })
 /*
 
 
