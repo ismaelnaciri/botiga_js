@@ -150,10 +150,9 @@ const ap = admin.initializeApp({
 const db = getFirestore(ap);
 
 
-app.post('/api/login',async (req,res)=> {
+app.post('/signin',async (req,res)=> {
 
   const dades = req.body.json;
-
 
   console.log(dades)
     dades.forEach(function(dada) {
@@ -173,6 +172,29 @@ app.post('/api/login',async (req,res)=> {
       })
     })
 })
+
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email)
+
+  console.log(email.type)
+
+  const user = await db.collection('iniciar-registre')
+    .where('clients.email', '==', email)
+    .where('clients.password', '==', password)
+    .get();
+
+  if (user.empty) {
+    console.log("truño")
+    return res.status(401).send('Credenciales inválidas');
+  } else {
+
+    return res.send('Inicio de sesión exitoso');
+  }
+});
+
+
+
 /*
 
 
