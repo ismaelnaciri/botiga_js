@@ -1,15 +1,42 @@
 const express = require('express');
+
 const dotenv = require('dotenv');
 dotenv.config({ path: '../.env' });
+
 const uuid = require('uuid')
 
 const app = express();
+
+const path = require('path');
 const fs = require('fs');
 
 const cors = require('cors');
 
+const {FieldValue} = require("firebase-admin/firestore");
+var admin = require("firebase-admin");
+var serviceAccount = require("./botiga-danisma-firebase-adminsdk-my3wq-9d1b270bca.json");
+const {getFirestore} = require("firebase-admin/firestore");
+const stream = require("stream");
+
+const ap = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = getFirestore(ap);
+
+
 const Sequelize = require("sequelize");
 const {NOW} = require("sequelize");
+
+app.use(cors());
+app.use(express.json());
+
+
+port = 3080;
+
+app.listen(port, ()=>{
+  console.log(`el port::${port} funciona`)
+});
 
 const sequelize = new Sequelize(
   process.env.DB_DATABASE,
@@ -87,15 +114,6 @@ sequelize.sync().then(()=>{
 
 
 
-app.use(cors());
-app.use(express.json());
-
-
-port = 3080;
-
-app.listen(port, ()=>{
-  console.log(`el port::${port} funciona`)
-});
 
 app.get('/productes', async (req, res) => {
 
@@ -137,32 +155,18 @@ app.post('/compres', async (req, res) => {
 });
 
 
-//prueba numero 1
-
-
-const {FieldValue} = require("firebase-admin/firestore");
-var admin = require("firebase-admin");
-var serviceAccount = require("./botiga-danisma-firebase-adminsdk-my3wq-9d1b270bca.json");
-const {getFirestore} = require("firebase-admin/firestore");
-const stream = require("stream");
-const ap = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-const db = getFirestore(ap);
 
 
 app.post('/signin',async (req,res)=> {
 
   const dades = req.body.json;
-
   console.log(dades)
+
     dades.forEach(function(dada) {
       db.collection('clients').doc(dada.correu).set(
-        {
-
-            nom: dada.nom,
-            email: dada.correu,
-            password: dada.contrasenya
+        { nom: dada.nom,
+          email: dada.correu,
+          password: dada.contrasenya
         }, {merge: true}).then(r => {
         return res.send(true)
       }).catch((err) => {
@@ -175,8 +179,8 @@ app.post('/signin',async (req,res)=> {
 })
 
 app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
 
+  const { email, password } = req.body;
 
   const user = await db.collection('clients')
     .where('email', '==', email)
@@ -192,21 +196,31 @@ app.post('/login', async (req, res) => {
   }
 
   if (user.empty) {
-
     return res.send(false);
   } else {
-
     return res.send(info);
   }
 });
 
-app.post('/api/contacto', (req, res) => {
-  const mensaje = req.body;
+
+
+const missatgesFoldes = path.join(__dirname, '..', 'missatges');
+
+app.post('/api/contacte', (req, res) => {
+  console.log(missatgesFoldes)
+  const missatgeObtingut = req.body;
+  const id = uuid.v4();
+  const nomArxiu = `missatge_${id}.txt`;
+  const ruta = path.join(missatgesFoldes, nomArxiu);
   const nice={
     corecto:"nice"
   }
-  // Guardar el mensaje en un archivo de texto
-  fs.appendFile('mensajes.txt', JSON.stringify(mensaje) + '\n', (err) => {
+
+
+  const contingutMissatge = `Nombre: ${missatgeObtingut.name}\nCorreo: ${missatgeObtingut.mail}\nMensaje: ${missatgeObtingut.missatge}`;
+
+
+  fs.writeFile(ruta, contingutMissatge, (err) => {
     if (err) {
       console.error('Error al guardar el mensaje:', err);
       res.status(500).send('Error al guardar el mensaje');
