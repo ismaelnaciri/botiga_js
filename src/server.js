@@ -144,6 +144,7 @@ const {FieldValue} = require("firebase-admin/firestore");
 var admin = require("firebase-admin");
 var serviceAccount = require("./botiga-danisma-firebase-adminsdk-my3wq-9d1b270bca.json");
 const {getFirestore} = require("firebase-admin/firestore");
+const stream = require("stream");
 const ap = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
@@ -199,6 +200,22 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.post('/api/contacto', (req, res) => {
+  const mensaje = req.body;
+  const nice={
+    corecto:"nice"
+  }
+  // Guardar el mensaje en un archivo de texto
+  fs.appendFile('mensajes.txt', JSON.stringify(mensaje) + '\n', (err) => {
+    if (err) {
+      console.error('Error al guardar el mensaje:', err);
+      res.status(500).send('Error al guardar el mensaje');
+    } else {
+      console.log('Mensaje guardado con éxito');
+      res.send(nice);
+    }
+  });
+});
 
 
 /*
