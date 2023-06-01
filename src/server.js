@@ -156,18 +156,18 @@ app.post('/signin',async (req,res)=> {
 
   console.log(dades)
     dades.forEach(function(dada) {
-      db.collection('iniciar-registre').doc('yWikbVf2wyCyqnyRkE8z').set(
+      db.collection('clients').doc(dada.correu).set(
         {
-          clients: FieldValue.arrayUnion({
+
             nom: dada.nom,
             email: dada.correu,
             password: dada.contrasenya
-          })
         }, {merge: true}).then(r => {
-        console.log("dades inserides")
+        return res.send(true)
       }).catch((err) => {
         if (err) {
           console.error(err)
+          return res.send(false)
         }
       })
     })
@@ -175,21 +175,27 @@ app.post('/signin',async (req,res)=> {
 
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  console.log(email)
 
-  console.log(email.type)
 
-  const user = await db.collection('iniciar-registre')
-    .where('clients.email', '==', email)
-    .where('clients.password', '==', password)
+  const user = await db.collection('clients')
+    .where('email', '==', email)
+    .where('password', '==', password)
     .get();
 
+  const data = user.docs[0].data();
+  console.log(typeof data)
+  const info= {
+    nomPersona: data.nom,
+    emailPersona: data.email,
+    contrasenyaPersona: data.password
+  }
+
   if (user.empty) {
-    console.log("truño")
-    return res.status(401).send('Credenciales inválidas');
+
+    return res.send(false);
   } else {
 
-    return res.send('Inicio de sesión exitoso');
+    return res.send(info);
   }
 });
 
