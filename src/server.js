@@ -228,3 +228,20 @@ app.post('/api/contacte', (req, res) => {
   });
 });
 
+app.post('/guardar-accion', (req, res) => {
+  const accio= req.body;
+  const nice={
+    corecto:"nice"
+  }
+  // Guardar el missatge en un archivo de texto
+  fs.appendFile(`log.txt`, JSON.stringify(accio) + '\n', (err) => {
+    if (err) {
+      console.error('Error al guardar l\'accio:', err);
+      res.status(500).send('Error al guardar l\'accio');
+    } else {
+      console.log('Accio guardada');
+      res.send(nice);
+    }
+  });
+});
+

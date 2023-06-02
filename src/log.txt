@@ -1,0 +1,14 @@
+{"usuari":"dani ","accio":"ha iniciat sessió","fechaHora":"2/6/2023, 20:23:15"}
+{"usuari":"dani ","accio":"ha afegit Nintendo Switch a la cistella","fechaHora":"2/6/2023, 20:23:54"}
+{"usuari":"dani ","accio":"ha realitzat una compra","fechaHora":"2/6/2023, 20:24:26"}
+{"usuari":"dani ","accio":"ha enviat un missatge","fechaHora":"2/6/2023, 20:26:13"}
+{"usuari":"dani ","accio":"ha obtingut un fletchinder","fechaHora":"2/6/2023, 20:26:29"}
+{"usuari":"dani ","accio":"ha tancat la sessio","fechaHora":"2/6/2023, 20:26:49"}
+{"usuari":"a","accio":"ha iniciat sessió","fechaHora":"2/6/2023, 20:40:18"}
+{"usuari":"a","accio":"ha afegit Nintendo Switch a la cistella","fechaHora":"2/6/2023, 20:40:21"}
+{"usuari":"a","accio":"ha realitzat una compra per un valor de 1.0830451035880235€","fechaHora":"2/6/2023, 20:40:28"}
+{"usuari":"a","accio":"ha iniciat sessió","fechaHora":"2/6/2023, 20:41:44"}
+{"usuari":"a","accio":"ha afegit Nintendo Switch a la cistella","fechaHora":"2/6/2023, 20:41:47"}
+{"usuari":"a","accio":"ha realitzat una compra per un valor de 310€","fechaHora":"2/6/2023, 20:41:51"}
+{"usuari":"a","accio":"ha afegit Xbox Series X a la cistella","fechaHora":"2/6/2023, 20:42:06"}
+{"usuari":"a","accio":"ha realitzat una compra per un valor de 402.4193548387097$","fechaHora":"2/6/2023, 20:42:17"}
